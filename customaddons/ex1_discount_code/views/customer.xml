@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+<!--view action update cus code -->
+    <record id="update_cus_code_view" model="ir.ui.view">
+        <field name="name">Update Customer Code</field>
+        <field name="model">update_cus_code</field>
+        <field name="arch" type="xml">
+            <form string="Update Customer Code">
+                <field name="update_code" string="New Code"/>
+                <field name="customer_ids" string="Customer"/>
+                <footer>
+                    <button string='Update' name="update_selected_cus_code" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- mass update all selected customer discount code   -->
+    <record id="mass_cus_code" model="ir.actions.server">
+        <field name="name">Update Code</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">
+            action=records.update_selected_cus_code()
+        </field>
+    </record>
+
+    <!--customer tree view inherit-->
+    <record id="customer_tree_view_inherit" model="ir.ui.view">
+        <field name="name">customer.tree.view.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="groups_id" eval="[(4,ref('ex1_discount_code.group_Advanced_Sale'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="/tree/field[@name='user_id']"  position="before">
+                <field name="customer_discount_code"/>
+                <field name="code_valid"/>
+            </xpath>
+        </field>
+    </record>
+
+
+<!--customer form inherit-->
+    <record id="customer_form_inherit" model="ir.ui.view">
+        <field name="name">customer.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="groups_id" eval="[(4,ref('ex1_discount_code.group_Advanced_Sale'))]"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='vat']"  position="after">
+                <field name="customer_discount_code" />
+                <field name="code_valid" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

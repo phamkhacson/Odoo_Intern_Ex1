@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <!--filter special customer -->
+    <record id="special_customer_search_filter" model="ir.ui.view">
+        <field name="name">special.customer.search.filter</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <filter string="SpecialCustomer"
+                        name="special_customer"
+                        domain="[('code_valid','=','True')]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="order_product_form_inherit" model="ir.ui.view">
+        <field name="name">order.product.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tax_totals_json']"  position="before">
+                <field name="customer_discount_code" force_save="1"/>
+                <field name="sale_order_discount_estimated" force_save="1"/>
+                <field name="code_valid" force_save="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

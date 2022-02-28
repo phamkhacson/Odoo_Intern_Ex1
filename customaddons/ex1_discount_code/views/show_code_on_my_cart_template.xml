@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="show_discount_code_portal_template" name="My product cart Inherit"
+                  inherit_id="website_sale.total">
+            <xpath expr='//tr[@id="order_total_taxes"]' position="after">
+                <br/>
+                <br/>
+                <tr id="customer_sale_code">
+                    <td class="text-right border-0">Discount code:</td>
+                    <td class="text-xl-right border-0">
+                        <span t-field="website_sale_order.partner_id.customer_discount_code"
+                              style="white-space: nowrap;"/>
+                    </td>
+                </tr>
+            </xpath>
+        </template>
+    </data>
+</odoo>
